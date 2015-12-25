@@ -1,8 +1,8 @@
 # wifi_wakeonlan
 
-Do you want to use wakeonlan but got stuck since your desktop connects via wifi?
+##Do you want to use wakeonlan but got stuck since your desktop connects via wifi?
 
-Here's a solution which uses a raspberry pi to scan wifi network for phone, then sends a wakeonlan signal to your desktop via a wired connection to wake it up.  Useful exercise in learning a bit of scripting and network configuration :D
+Here's a solution which uses a raspberry pi to scan the wifi network for the phone, then sends a wakeonlan signal to your desktop via a wired connection to wake it up.
 
 This is tested on:
 * Desktop running Windows 10
@@ -22,7 +22,7 @@ This is tested on:
     1. Device Manager -> Network Adapters section -> ethernet controller -> right click to properties
     2. Power Management tab -> Check "Allow this device to wake the computer"
     3. Advanced tab -> Set "Wake on magic packet" to "Enabled"
-  3. Grab mac address
+  3. Grab mac address of your desktop
     1. Network Connections -> ethernet controller -> right click to status
     2. Click "Details..." and copy down the "Physical Address"
 3. Set up phone
@@ -67,6 +67,9 @@ This is tested on:
     3. This tells crontab that on the first day of each week, remove any files and directories that are over a week old from that log directory
 
 If you get stuck with any of this, please use Google and don't be afraid to take a peek at the scripts.  They are documented and should be fairly readable :)
+
+### Notes
+1. arp-scan requires sudo
 
 Cheers,
 Andrew
