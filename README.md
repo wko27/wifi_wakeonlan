@@ -17,24 +17,24 @@ This is tested on:
 ### Steps:
 1. Connect pi to desktop via ethernet
 2. Set up desktop
-  a. Enable wakeonlan in BIOS settings
-  b. Enable wakeonlan in [Windows 10](http://www.groovypost.com/howto/enable-wake-on-lan-windows-10/)
+  1. Enable wakeonlan in BIOS settings
+  2. Enable wakeonlan in [Windows 10](http://www.groovypost.com/howto/enable-wake-on-lan-windows-10/)
     1. Device Manager -> Network Adapters section -> ethernet controller -> right click to properties
     2. Power Management tab -> Check "Allow this device to wake the computer"
     3. Advanced tab -> Set "Wake on magic packet" to "Enabled"
-  d. Grab mac address
+  3. Grab mac address
     1. Network Connections -> ethernet controller -> right click to status
     2. Click "Details..." and copy down the "Physical Address"
 3. Set up phone
-  a. Keep wi-fi on when sleeping
+  1. Keep wi-fi on when sleeping
     1. Settings -> Wi-Fi -> Advanced -> Set "Keep Wi-Fi on during sleep" to "Always"
-  b. Grab the mac address of your phone
+  2. Grab the mac address of your phone
     1. Settings -> Wi-Fi -> Advanced -> Should be at the bottom
 4. Set up pi
-  a. Download arp-scan and wakeonlan
+  1. Download arp-scan and wakeonlan
     1. sudo apt-get arp-scan
     2. sudo apt-get wakeonlan
-  b. Setup ethernet interface
+  2. Setup ethernet interface
     1. Append the contents of interfaces.append to /etc/network/interfaces
     2. This registers your pi with ip address 10.0.0.1 on the LAN connection to the desktop
     3. Reboot the pi so the configuration takes effect
@@ -42,26 +42,26 @@ This is tested on:
     5. If all goes well, you should see your desktop's ip and mac address pop up
     6. Specifically, it should say "Ending arp-scan (arp scan version number): 256 hosts scanned ... 1 responded"
     7. If not, check if your desktop's firewall is blocking requests
-  c. Download contents of this repository onto the pi
+  3. Download contents of this repository onto the pi
     1. Create a directory (e.g. /home/pi/scripts)
     2. Move the is_phone_connected, phone_wake_desktop, and wake_desktop scripts into the directory
     3. Give execute permissions on these scripts by running "chmod +x /home/pi/scripts/*"
-  d. Enable pi to check if phone is connected
+  4. Enable pi to check if phone is connected
     1. Update the phone's mac address
     2. Update wifirange if you have a lot of devices on your wifi (as an optimization, we only send an arp requests to the first 32 addresses since it's unlikely your router is assigning higher addresses to your phone)
     3. Test if this works by running the script when your phone has wifi enabled/disabled
     4. If this doesn't work, go back to step 3
-  e. Enable wake desktop
+  5. Enable wake desktop
     1. Update macaddr to your desktop's mac address
     2. Test if this works by running the script to turn on your desktop
     3. If this doesn't work go back to step 2
-  f. Set up a service to run phone_wake_desktop continuously
+  6. Set up a service to run phone_wake_desktop continuously
     1. Update the location of the phone_wake_desktop script if needed in wake_up script
     2. Move wake_up script into /etc/init.d
     3. Run "sudo update-rc.d wake_up defaults" to register the script to start automatically
     4. Reboot the pi
     5. Check the log output in /var/log/phone_wake_desktop/out.log
-  g. Set up a service to remove old log files
+  7. Set up a service to remove old log files
     1. Run "crontab -e"
     2. Add "0 0 * * 1 find /var/log/phone_wake_desktop -mtime +7 -exec rm -rf '{}' \;"
     3. This tells crontab that on the first day of each week, remove any files and directories that are over a week old from that log directory
