@@ -66,10 +66,11 @@ This is tested on:
     2. Add "0 0 * * 1 find /var/log/phone_wake_desktop -mtime +7 -exec rm -rf '{}' \;"
     3. This tells crontab that on the first day of each week, remove any files and directories that are over a week old from that log directory
 
-If you get stuck with any of this, please use Google and don't be afraid to take a peek at the scripts.  They are documented and should be fairly readable :)
+If you get stuck with any of this, please use Google and don't be afraid to take a peek at the scripts.  They are documented and should be fairly readable!
 
 ### Notes
 1. arp-scan requires sudo
+2. script only believes the phone is truly disconnected if it hasn't been seen for 5 checks (this is done by keeping state in a temp file)
 
 Cheers,
 Andrew
