@@ -1,0 +1,11 @@
+#!/bin/bash
+# Prints "connected" if the phone is connected to wifi network
+# Requires sudo
+# 26 since it's unlikely wifi network will assign more than 64 addresses out
+set -e # Abort on error
+set -u # Abort on undeclared variable
+
+macaddr=PHONE_MAC_ADDR (e.g. A0:B1:C2:D3:E4:F5)
+wifirange=192.168.1.0/26
+retries=10
+[[ $( sudo arp-scan -I wlan0 "$wifirange" -r "$retries" | grep "$macaddr" | wc -l ) -ge 1 ]] && echo "connected" || echo "disconnected"

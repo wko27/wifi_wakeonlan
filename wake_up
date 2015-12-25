@@ -1,0 +1,28 @@
+#!/bin/sh
+# Run wake up scan script continuously
+
+### BEGIN INIT INFO
+# Provides:           wake
+# Required-Start:
+# Required-Stop:
+# Default-Start:      3 4 5
+# Default-Stop:       0 1 2 6
+# Short-Description:  wake
+### END INIT INFO
+
+case "$1" in
+    start)
+	echo "Starting phone wake up desktop script"
+	while true; do /home/pi/scripts/phone_wake_desktop | ts '\%Y-\%m-\%d \%H:\%M:\%S \%Z' | cronolog -l /var/log/phone_wake_desktop/out.log /var/log/phone_wake_desktop/\%Y/\%m/\%d/out.log && sleep 5; done
+	;;
+    stop)
+	echo "Stopping phone wake up desktop script"
+	killall phone_wake_desktop
+	;;
+    *)
+	echo "Usage: /etc/init.d/wake_up {start|stop}"
+	exit 1
+	;;
+esac
+
+exit 0

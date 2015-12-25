@@ -1,0 +1,13 @@
+# Configure ethernet LAN
+auto eth0
+iface eth0 inet static
+    address 10.0.0.1
+    netmask 255.255.255.0
+    gateway 10.0.0.1
+    up route del default gw 10.0.01 eth0
+    up route add default gw 192.168.0.1 wlan0
+
+# Required
+iface default inet dhcp
+    up route del default gw 10.0.0.1 eth0
+    up route add default gw 192.168.0.1 wlan0
