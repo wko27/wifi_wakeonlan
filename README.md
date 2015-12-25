@@ -1,6 +1,6 @@
 # wifi_wakeonlan
 
-##Do you want to use wakeonlan but got stuck since your desktop connects via wifi?
+Do you want to use wakeonlan but got stuck since your desktop connects via wifi?
 
 Here's a solution which uses a raspberry pi to scan the wifi network for the phone, then sends a wakeonlan signal to your desktop via a wired connection to wake it up.
 
@@ -48,7 +48,7 @@ This is tested on:
     3. Give execute permissions on these scripts by running "chmod +x /home/pi/scripts/*"
   4. Enable pi to check if phone is connected
     1. Update the phone's mac address
-    2. Update wifirange if you have a lot of devices on your wifi (as an optimization, we only send an arp requests to the first 32 addresses since it's unlikely your router is assigning higher addresses to your phone)
+    2. Update wifirange if you have a lot of devices on your wifi (as an optimization, we only send an arp requests to the first few addresses since it's unlikely your router is assigning higher addresses to your phone)
     3. Test if this works by running the script when your phone has wifi enabled/disabled
     4. If this doesn't work, go back to step 3
   5. Enable wake desktop
