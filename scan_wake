@@ -1,0 +1,12 @@
+#!/bin/bash
+# Continuously calls phone_wake_desktop
+
+set -e # Abort on error
+set -u # Abort on undeclared variable
+
+BIN_DIR=$( dirname ${BASH_SOURCE[0]} )
+
+while true; do
+    "$BIN_DIR"/phone_wake_desktop | ts '%Y-%m-%d %H:%M:%S %Z' | cronolog -l "/var/log/scan_wake/out.log" "/var/log/scan_wake/%Y/%m/%d/out.log"
+    sleep 5
+done

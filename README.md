@@ -44,26 +44,27 @@ This is tested on:
     7. If not, check if your desktop's firewall is blocking requests
   3. Download contents of this repository onto the pi
     1. Create a directory (e.g. /home/pi/scripts)
-    2. Move the is_phone_connected, phone_wake_desktop, and wake_desktop scripts into the directory
+    2. Move the is_phone_connected, phone_wake_desktop, wake_desktop, and scan_wake scripts into the directory
     3. Give execute permissions on these scripts by running "chmod +x /home/pi/scripts/*"
   4. Enable pi to check if phone is connected
-    1. Update the phone's mac address
+    1. Update the phone's mac address in the is_phone_connected script
     2. Update wifirange if you have a lot of devices on your wifi (as an optimization, we only send an arp requests to the first few addresses since it's unlikely your router is assigning higher addresses to your phone)
     3. Test if this works by running the script when your phone has wifi enabled/disabled
     4. If this doesn't work, go back to step 3
-  5. Enable wake desktop
-    1. Update macaddr to your desktop's mac address
+  5. Enable pi to wake desktop
+    1. Update macaddr to your desktop's mac address in the wake_desktop script
     2. Test if this works by running the script to turn on your desktop
     3. If this doesn't work go back to step 2
   6. Set up a service to run phone_wake_desktop continuously
-    1. Update the location of the phone_wake_desktop script if needed in wake_up script
+    1. Update the location of the scripts if needed in wake_up script
     2. Move wake_up script into /etc/init.d
-    3. Run "sudo update-rc.d wake_up defaults" to register the script to start automatically
-    4. Reboot the pi
-    5. Check the log output in /var/log/phone_wake_desktop/out.log
+    3. Run "sudo update-rc.d wake_up defaults" to register the script to start on boot
+    4. Run "sudo service wake_up start" to start the service
+    5. Check the log output in /var/log/scan_wake/out.log
+    6. If you don't see anything, try running the scan_wake script manually
   7. Set up a service to remove old log files
     1. Run "crontab -e"
-    2. Add "0 0 * * 1 find /var/log/phone_wake_desktop -mtime +7 -exec rm -rf '{}' \;"
+    2. Add "0 0 * * 1 find /var/log/scan_wake -mtime +7 -exec rm -rf '{}' \;"
     3. This tells crontab that on the first day of each week, remove any files and directories that are over a week old from that log directory
 
 If you get stuck with any of this, please use Google and don't be afraid to take a peek at the scripts.  They are documented and should be fairly readable!
