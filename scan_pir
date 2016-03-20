@@ -4,14 +4,24 @@ import RPi.GPIO as GPIO
 import time
 from subprocess import call
 
-pir_pin=7
+pir_pin = 7
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(pir_pin, GPIO.IN)
 
+last_wake = time.time()
+
 def Motion(pir_pin):
+  global last_wake
   print "motion detected"
-  call(["/home/pi/scripts/wake_desktop"])
+  now = time.time()
+  diff = now - last_wake
+  if diff > 900:
+    print "waking desktop!"
+    call(["/home/pi/scripts/wake_desktop"])
+    last_wake = now
+  else:
+    print "not waking desktop, last wake time was only %s seconds ago" % diff
 
 GPIO.add_event_detect(pir_pin, GPIO.RISING, callback=Motion)
 
