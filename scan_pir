@@ -1,0 +1,19 @@
+#!/usr/bin/python
+
+import RPi.GPIO as GPIO
+import time
+from subprocess import call
+
+pir_pin=7
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(pir_pin, GPIO.IN)
+
+def Motion(pir_pin):
+  print "motion detected"
+  call(["/home/pi/scripts/wake_desktop"])
+
+GPIO.add_event_detect(pir_pin, GPIO.RISING, callback=Motion)
+
+while 1:
+  time.sleep(100)
