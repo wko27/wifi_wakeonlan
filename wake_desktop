@@ -6,5 +6,5 @@ set -u # Abort on undeclared variable
 
 # Send to entire subnet since shutdown desktop doesn't have an ip assigned yet
 ipaddr=10.0.0.255
-macaddr=DESKTOP_MAC_ADDR (e.g. A0:B1:C2:D3:E4:F5)
+macaddr=D0:50:99:0E:32:20
 wakeonlan -i "$ipaddr" "$macaddr"
